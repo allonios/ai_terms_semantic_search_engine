@@ -64,7 +64,7 @@ def get_words_sim(w1, w2):
 
 def get_abbreviation_indices(w, tokens, index):
     for i in range(len(tokens)):
-        if is_abbrev(w, " ".join(tokens[index:i])):
+        if is_abbrev(w, " ".join(tokens[:i+1])):
             return index, index + i
 
 
@@ -78,11 +78,11 @@ def fast_calc_similarity(name1_tokens, name2_tokens, syns1, syns2):
                 sim_matrix[i1] = 1
                 break
 
-    for i1, w2 in enumerate(name2_tokens):
-        for i2, w1 in enumerate(name1_tokens):
+    for i2, w2 in enumerate(name2_tokens):
+        for i1, w1 in enumerate(name1_tokens):
             if is_abbrev(w2, " ".join(name1_tokens[i1:])):
                 start, end = get_abbreviation_indices(
-                    w2, name1_tokens[i1:], i2
+                    w2, name1_tokens[i1:], i1
                 )
                 sim_matrix[start:end] = 1
                 break
