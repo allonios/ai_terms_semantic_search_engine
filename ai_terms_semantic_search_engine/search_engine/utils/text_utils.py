@@ -7,7 +7,7 @@ import numpy as np
 
 
 def names_preprocessing(name):
-    return re.sub(r"[^a-zA-Z ] ", "", str(name))
+    return re.sub(r"[^a-zA-Z ] ", "", name)
 
 
 @jit(nopython=True)

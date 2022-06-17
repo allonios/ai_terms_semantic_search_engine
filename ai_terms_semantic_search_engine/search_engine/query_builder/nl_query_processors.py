@@ -66,8 +66,8 @@ class ExtractClosestTermsProcessor(BaseProcessor):
             for subject in self.state.subjects:
                 similarity = (
                     (
-                        calc_similarity(term, subject)
-                        + calc_similarity(subject, term)
+                        calc_similarity(term, subject.name)
+                        + calc_similarity(subject.name, term)
                     )
                     / 2
                 )
@@ -78,25 +78,3 @@ class ExtractClosestTermsProcessor(BaseProcessor):
                     "Similarity:", similarity
                 )
             print("---------------------------------------------------------")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
