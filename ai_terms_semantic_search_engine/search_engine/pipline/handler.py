@@ -8,7 +8,7 @@ class BaseHandler:
     def __init__(
         self,
         processors: List[BaseProcessor],
-        initial_state: Any,
+        initial_state: Any = None,
         verbose: bool = True,
         run_timer: bool = False,
     ):
@@ -18,7 +18,10 @@ class BaseHandler:
         self.verbose = verbose
         self.run_timer = run_timer
 
-    def run_processors(self) -> None:
+    def run_processors(self, init_state=None) -> None:
+        if init_state:
+            self.current_state = init_state
+
         for processor in self.processors:
             if self.verbose:
                 print("Running:", processor.PROCESSOR_NAME)
