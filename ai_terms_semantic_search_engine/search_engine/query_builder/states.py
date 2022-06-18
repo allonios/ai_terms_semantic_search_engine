@@ -22,7 +22,9 @@ class QueryState:
 
         self.terms_combinations = []
 
-        self.in_query_subjects = {}
-        self.in_query_classes = {}
-        self.in_query_predicates = {}
+        self.in_query_subjects = []
+        self.in_query_classes = []
+        self.in_query_predicates = []
 
+        self.query_graph = []
+        self.search_result = []
