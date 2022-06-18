@@ -2,17 +2,18 @@
 # TODO 2- extract all Classes.
 # TODO 3- extract all Predicates.
 
-from pipline.processors import BaseProcessor
 from itertools import chain
+
+from pipline.processors import BaseProcessor
 
 
 class IterableExtractorProcessor(BaseProcessor):
     def __init__(
-            self,
-            get_attr_name: str,
-            set_attr_name: str,
-            init_state=None,
-            processor_name: str = "Iterable Extractor Processor"
+        self,
+        get_attr_name: str,
+        set_attr_name: str,
+        init_state=None,
+        processor_name: str = "Iterable Extractor Processor",
     ) -> None:
         super().__init__(init_state)
         self.get_attr_name = get_attr_name
@@ -25,18 +26,19 @@ class IterableExtractorProcessor(BaseProcessor):
         setattr(
             self.state,
             self.set_attr_name,
-            set(
+            list(
                 chain(
                     *map(
                         lambda individuals: individuals,
                         map(
                             lambda onto: list(
-                                getattr(onto, self.get_attr_name)()),
-                            self.state.ontologies
-                        )
+                                getattr(onto, self.get_attr_name)()
+                            ),
+                            self.state.ontologies,
+                        ),
                     )
                 )
-            )
+            ),
         )
 
         return self.state
