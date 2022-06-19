@@ -96,8 +96,22 @@ def fast_calc_similarity(name1_tokens, name2_tokens, syns1, syns2):
 
     return sim_matrix
 
+def camel_case_split(str):
+    words = [[str[0]]]
+  
+    for c in str[1:]:
+        if words[-1][-1].islower() and c.isupper():
+            words.append(list(c))
+        else:
+            words[-1].append(c)
+  
+    return " ".join([''.join(word) for word in words])
+
 
 def calc_similarity(name1, name2):
+    name1 = camel_case_split(name1)
+    name2 = camel_case_split(name2)
+    
     name1 = names_preprocessing(name1)
     name2 = names_preprocessing(name2)
 
