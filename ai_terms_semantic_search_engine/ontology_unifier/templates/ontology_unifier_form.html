@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Unify Ontologies</title>
+</head>
+<body>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Unify</button>
+</form>
+{% if result %}
+    <br>
+    <a href="{{ result }}">Unified File</a>
+    <br>
+{% endif %}
+</body>
+</html>
