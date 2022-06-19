@@ -1,14 +1,16 @@
 from typing import Any, Dict, List, Union
 
-from pipline.handler import BaseHandler
-from query_builder.nl_query_processors import (
+from search_engine.pipline.handler import BaseHandler
+from search_engine.query_builder.nl_query_processors import (
     ExtractClosestTermsProcessor,
     NLQueryTokenizer,
     SparQLQueryBuilder,
     TermsCombinationsProcessor,
 )
-from query_builder.ontology_processors import IterableExtractorProcessor
-from query_builder.states import QueryState
+from search_engine.query_builder.ontology_processors import (
+    IterableExtractorProcessor
+)
+from search_engine.query_builder.states import QueryState
 
 
 class SearchEngineEvaluator:

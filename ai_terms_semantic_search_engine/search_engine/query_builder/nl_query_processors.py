@@ -9,9 +9,9 @@ from typing import Dict, List
 import en_core_web_md
 import nltk
 import numpy as np
-from pipline.processors import BaseProcessor
-from utils.sparql_query_utils import find_subjects
-from utils.text_utils import calc_similarity
+from search_engine.pipline.processors import BaseProcessor
+from search_engine.utils.sparql_query_utils import find_subjects
+from search_engine.utils.text_utils import calc_similarity
 
 
 class NLQueryTokenizer(BaseProcessor):

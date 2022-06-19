@@ -1,6 +1,6 @@
 from typing import List
 
-from utils.utils import load_ontologies
+from search_engine.utils.utils import load_ontologies
 
 
 class QueryState:

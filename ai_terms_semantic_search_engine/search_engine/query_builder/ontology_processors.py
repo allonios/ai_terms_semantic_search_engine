@@ -4,7 +4,7 @@
 
 from itertools import chain
 
-from pipline.processors import BaseProcessor
+from search_engine.pipline.processors import BaseProcessor
 
 
 class IterableExtractorProcessor(BaseProcessor):

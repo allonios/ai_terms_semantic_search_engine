@@ -1,7 +1,7 @@
 from typing import Any, List
 
-from pipline.processors import BaseProcessor
-from utils.utils import exec_timer
+from search_engine.pipline.processors import BaseProcessor
+from search_engine.utils.utils import exec_timer
 
 
 class BaseHandler:
