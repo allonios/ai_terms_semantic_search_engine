@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.generic import FormView
 from search_engine.forms import SearchForm
-from search_engine.search_mixins import SearchMixin
+from search_engine.mixins import SearchMixin
 
 
 class SearchFormView(FormView, SearchMixin):
