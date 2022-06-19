@@ -93,3 +93,4 @@ docker.backup.sql.gz
 docker.backup.sql
 
 ignored/
+unified_ontologies/
