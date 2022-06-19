@@ -13,6 +13,15 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / "subdir".
+from search_engine.pipline.handler import BaseHandler
+from search_engine.query_builder.nl_query_processors import (
+    ExtractClosestTermsProcessor,
+    NLQueryTokenizer,
+    SparQLQueryBuilder,
+    TermsCombinationsProcessor,
+)
+from search_engine.query_builder.ontology_processors import IterableExtractorProcessor
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -20,7 +29,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-%^tse_a7zl2)e0dpu3+t7cvage2s3&q#=@o*^z)92asn+d3k6z"
+SECRET_KEY = (
+    "django-insecure-%^tse_a7zl2)e0dpu3+t7cvage2s3&q#=@o*^z)92asn+d3k6z"
+)
 
 # SECURITY WARNING: don"t run with debug turned on in production!
 DEBUG = True
@@ -122,3 +133,38 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+SEARCH_ENGINE = BaseHandler(
+    processors=[
+        IterableExtractorProcessor(
+            get_attr_name="individuals",
+            set_attr_name="subjects",
+            processor_name="Subjects Extractor Processor",
+        ),
+        IterableExtractorProcessor(
+            get_attr_name="properties",
+            set_attr_name="predicates",
+            processor_name="Predicates Extractor Processor",
+        ),
+        NLQueryTokenizer(),
+        TermsCombinationsProcessor(window_size=4),
+        ExtractClosestTermsProcessor(
+            "subjects",
+            "in_query_subjects",
+            processor_name="Extract Closest Terms From " "Subjects Processor",
+            similarity_threshold=0.7,
+        ),
+        ExtractClosestTermsProcessor(
+            "predicates",
+            "in_query_predicates",
+            processor_name="Extract Closest Terms From "
+            "Predicates Processor",
+            similarity_threshold=0.7,
+            default="description",
+        ),
+        SparQLQueryBuilder(),
+    ],
+)
+
+ONTOLOGIES_PATH = "../ignored/data/autoencoder/"
