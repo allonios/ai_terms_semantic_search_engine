@@ -132,6 +132,8 @@ class ExtractClosestTermsProcessor(BaseProcessor):
                         "similarity": similarity,
                     }
                 )
+            #     print(f"Term: {term} | Element: {element} | Similarity: {similarity}")
+            # print("-----------------------------------------------------------")
 
             max_sim_index = np.argmax(
                 list(map(lambda sim: sim["similarity"], similarities))
@@ -201,4 +203,13 @@ class SparQLQueryBuilder(BaseProcessor):
                 find_subjects(subject, subjects, predicates)
             )
 
-        self.state.search_result = list(chain(*self.state.query_graph))
+        self.state.search_result = list(
+            chain(
+                *map(
+                    lambda result: result["value"],
+                    filter(
+                        lambda result: len(result) != 0, self.state.query_graph
+                    ),
+                )
+            )
+        )
