@@ -203,13 +203,27 @@ class SparQLQueryBuilder(BaseProcessor):
                 find_subjects(subject, subjects, predicates)
             )
 
+        search_res = list(
+            map(
+                lambda result: result,
+                filter(
+                    lambda result: len(result) != 0, self.state.query_graph
+                ),
+            )
+        )
+
         self.state.search_result = list(
-            chain(
-                *map(
-                    lambda result: result["value"],
-                    filter(
-                        lambda result: len(result) != 0, self.state.query_graph
-                    ),
+            filter(lambda res: res["type"] == "literal", search_res)
+        )
+
+        if not self.state.search_result:
+            self.state.search_result = list(
+                filter(
+                    lambda res: res["type"] == "from_iri_description",
+                    search_res,
                 )
             )
+
+        self.state.search_result = list(
+            map(lambda res: res["value"], self.state.search_result)
         )

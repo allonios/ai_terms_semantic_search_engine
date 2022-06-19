@@ -13,12 +13,15 @@ class UnifyOntologyMixin:
         )
 
     def unify_file(self, file):
-        final_file_path = os.path.join(
+        final_file_path1 = os.path.join(
             settings.UNIFIED_ONTOLOGIES_ROOT, "final.owl"
         )
+        final_file_path2 = os.path.join(
+            settings.UNIFIED_ONTOLOGIES_ROOT, "final1.owl"
+        )
 
-        align_ontologies(final_file_path, file, final_file_path)
+        align_ontologies(final_file_path1, file, final_file_path2)
 
         os.remove(file)
 
-        return settings.UNIFIED_ONTOLOGIES_URL + "final.owl"
+        return settings.UNIFIED_ONTOLOGIES_URL + "final1.owl"

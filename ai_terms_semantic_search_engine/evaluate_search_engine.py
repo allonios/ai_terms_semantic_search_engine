@@ -1,3 +1,4 @@
+from itertools import chain
 from typing import Any, Dict, List, Union
 
 from search_engine.pipline.handler import BaseHandler
@@ -7,9 +8,7 @@ from search_engine.query_builder.nl_query_processors import (
     SparQLQueryBuilder,
     TermsCombinationsProcessor,
 )
-from search_engine.query_builder.ontology_processors import (
-    IterableExtractorProcessor
-)
+from search_engine.query_builder.ontology_processors import IterableExtractorProcessor
 from search_engine.query_builder.states import QueryState
 
 
@@ -29,7 +28,10 @@ class SearchEngineEvaluator:
             )
             result = self.search_engine.current_state.search_result
             results.append(
-                {"question": question["question"], "result": result}
+                {
+                    "question": question["question"],
+                    "result": list(chain(*result)),
+                }
             )
         return results
 
@@ -173,7 +175,7 @@ evaluator = SearchEngineEvaluator(
         {
             "case_description": "getting a straight forward attribute.",
             "question": "what does autoencoder learns?",
-            "result": [""],
+            "result": ["the weights are knowlage abstraction from dataset"],
         },
     ],
     search_engine=search_engine,
